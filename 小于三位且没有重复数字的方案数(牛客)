@@ -1,0 +1,74 @@
+#include<iostream>
+#include<cstring>
+#include<algorithm>
+#define ll long long
+using namespace std;
+int n;char s[54];
+int vis[104];ll ans=0;
+void dfs(int x,int te)
+{
+	if (x>n)
+	{
+		ans=ans+te;
+		return ;
+	}
+	if (x==n)
+	{
+		int ss=s[x]-'0';
+		if (vis[ss])
+		{
+			return;
+		}
+		vis[ss]=1;
+		dfs(x+1,te);
+		vis[ss]=0;
+
+	}
+	else
+	{
+		if (s[x]=='0')
+		{
+			if(vis[0]==1)
+			{
+				return;
+			}
+			vis[0]=1;
+			dfs(x+1,te);
+			vis[0]=0;
+
+		}
+		else
+		{
+			int ss=s[x]-'0';
+			if(vis[ss]==0)
+			{
+				vis[ss]=1;
+			dfs(x+1,te);
+			vis[ss]=0;
+			}
+			int ss1=10*(s[x]-'0')+s[x+1]-'0';
+			if(vis[ss1]==0)
+			{
+				vis[ss1]=1;
+			dfs(x+2,te);
+			vis[ss1]=0;
+			}
+
+
+		}
+	}
+}
+int main()
+{
+	while(scanf("%s",s+1)!=EOF)
+	{
+		n=strlen(s+1);
+		memset(vis,0,sizeof(vis));
+		ans=0;
+		dfs(1,1);
+		printf("%lld\n",ans);
+
+
+	}
+	
+}
